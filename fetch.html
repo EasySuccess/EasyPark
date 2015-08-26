@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Page Title</title>
-</head>
-<body>
-
-<h1>This is a Heading</h1>
-<p>This is a paragraph.</p>
-
-</body>
+	<head>
+		<title>Page Title</title>
+	</head>
+	<body>
+		<div id="content">
+		</div>
+	</body>
 </html>
 <script src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -18,17 +16,72 @@
 		
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 
-		$.ajax({ url: 'proxy.php', dataType: 'xml',
-			success: function(data) { 
-				alert(data); 
-			} 
-		});
-		
-		var TestObject = Parse.Object.extend("TestObject");
-		var testObject = new TestObject();
-		testObject.save({foo: "bar"}).then(function(object) {
-		  alert("yay! it worked");
-		});
+		setInterval(function(){
+			$.ajax({ url: 'proxy.php',
+				success: function(data) { 
+					// console.log("Success"); 
+					// console.log(data); 
+					
+					var parser=new DOMParser();
+					var xmlDoc=parser.parseFromString(data,"text/xml");
+					$xml = $(xmlDoc)
+					$carParkInfo = $xml.find(".MainContentText >table >tr");
+					var carParkStat = Parse.Object.extend("Dev_Carpark_Stat");
+					
+					$carParkInfo.each(function(index){
+						if(index > 0){
+						
+							var carParkStatObj = new carParkStat();
+							
+							$(this).find("td").each(function(index2){
+
+								var value = $.trim($(this).text());
+								
+								if(value.length){
+									switch(index2){
+										case 0:
+											carParkStatObj.set("name", value);
+											break;
+										case 1:
+											if(!isNaN(parseInt(value))){
+												carParkStatObj.set("num_carpark", parseInt(value));
+											}else{
+												carParkStatObj.set("num_carpark", 0);
+											}
+											break;
+										case 2:
+											if(!isNaN(parseInt(value))){
+												carParkStatObj.set("num_motorpark", parseInt(value));
+											}else{
+												carParkStatObj.set("num_motorpark", 0);
+											}
+											break;
+										case 3:
+											//Update Time: Use the default updatedAt
+											break;
+										default:
+											break;
+									}
+								}
+							});
+							carParkStatObj.save();
+						}
+					});
+					
+					
+				} ,
+				error: function(error){
+					console.log("Error");
+					console.log(error);
+				}
+			});
+			
+			console.log("Updated at " + new Date());
+			
+		 }, 60000);
+		 
+		 console.log("End of Code");
+		 
 	});
 
 </script>
