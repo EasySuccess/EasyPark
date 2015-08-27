@@ -4,24 +4,33 @@
 		<title>Page Title</title>
 	</head>
 	<body>
-		<div id="content">
-		</div>
+		<div><big>Fetch Car Park Information from DSAT</big></div>
+		<div>This page must keep on so as to keep schedule jobs proceed</div>
+		<div id="interval"></div>
+		<div id="start-time"></div></br>
+		<div id="content"></div>
 	</body>
 </html>
 <script src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script>
+	
+	var interval = 60000;
 
 	$( document ).ready ( function() {
+		
+		$("#start-time").html("Start time: " + new Date());
+		$("#interval").html("Interval: " + parseInt(interval/1000));
 		
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 
 		setInterval(function(){
+			
 			$.ajax({ url: 'proxy.php',
 				success: function(data) { 
 					// console.log("Success"); 
 					// console.log(data); 
-					
+					var numRecord = 0;
 					var parser=new DOMParser();
 					var xmlDoc=parser.parseFromString(data,"text/xml");
 					$xml = $(xmlDoc)
@@ -30,6 +39,7 @@
 					
 					$carParkInfo.each(function(index){
 						if(index > 0){
+							numRecord = index;
 						
 							var carParkStatObj = new carParkStat();
 							
@@ -68,6 +78,8 @@
 						}
 					});
 					
+					// console.log("Created " + numRecord " records at " + new Date());
+					$("#content").append("<div>Created " + numRecord + " records at " + new Date() + "</div>");
 					
 				} ,
 				error: function(error){
@@ -76,11 +88,9 @@
 				}
 			});
 			
-			console.log("Updated at " + new Date());
-			
-		 }, 60000);
+		 }, interval);
 		 
-		 console.log("End of Code");
+		 // console.log("End of Code");
 		 
 	});
 
