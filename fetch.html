@@ -14,13 +14,13 @@
 <script src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script>
-	
-	var interval = 60000;
+	var interval_min = 5;
+	var interval_ms = interval_min * 60000;
 
 	$( document ).ready ( function() {
 		
 		$("#start-time").html("Start time: " + new Date());
-		$("#interval").html("Interval: " + parseInt(interval/1000));
+		$("#interval").html("Interval: " + interval_min + " minutes");
 		
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 
@@ -88,7 +88,7 @@
 				}
 			});
 			
-		 }, interval);
+		 }, interval_ms);
 		 
 		 // console.log("End of Code");
 		 
