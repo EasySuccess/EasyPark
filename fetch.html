@@ -4,8 +4,8 @@
 		<title>Page Title</title>
 	</head>
 	<body>
-		<div><big>Fetch Car Park Information from DSAT</big></div>
-		<div>This page must keep on so as to keep schedule jobs proceed</div>
+		<div><big>Fetching Parking Data from DSAT</big></div>
+		<div id="status"></div>
 		<div id="interval"></div>
 		<div id="start-time"></div></br>
 		<div id="content"></div>
@@ -19,79 +19,84 @@
 
 	$( document ).ready ( function() {
 		
-		$("#start-time").html("Start time: " + new Date());
-		$("#interval").html("Interval: " + interval_min + " minutes");
+		// $("#start-time").html("Start time: " + new Date());
+		// $("#interval").html("Interval: " + interval_min + " minutes");
 		
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 
-		setInterval(function(){
-			
-			$.ajax({ url: 'proxy.php',
-				success: function(data) { 
-					// console.log("Success"); 
-					// console.log(data); 
-					var numRecord = 0;
-					var parser=new DOMParser();
-					var xmlDoc=parser.parseFromString(data,"text/xml");
-					$xml = $(xmlDoc)
-					$carParkInfo = $xml.find(".MainContentText >table >tr");
-					var carParkStat = Parse.Object.extend("Dev_Carpark_Stat");
-					
-					$carParkInfo.each(function(index){
-						if(index > 0){
-							numRecord = index;
+		Parse.Cloud.run('getHTML', { html : 'http://www.dsat.gov.mo/tc/carpark_realtime_core.aspx'}, {
+			success: function(data) {
+				
+				console.log("Data downloaded");
+				
+				var parser=new DOMParser();
+				var ParkingData = Parse.Object.extend("Dev_Parking_Data");
+				var xmlDoc=parser.parseFromString(data,"text/xml");
+				$xml = $(xmlDoc)
+				$carParkData = $xml.find(".MainContentText >table >tr");
+				
+				$carParkData.each(function(index){
+					if(index > 0){
 						
-							var carParkStatObj = new carParkStat();
-							
-							$(this).find("td").each(function(index2){
+						$unitData = $(this);
+					
+						
+						var object = new ParkingData();
+						
+						$unitData.find("td").each(function(index2){
 
-								var value = $.trim($(this).text());
-								
-								if(value.length){
-									switch(index2){
-										case 0:
-											carParkStatObj.set("name", value);
-											break;
-										case 1:
-											if(!isNaN(parseInt(value))){
-												carParkStatObj.set("num_carpark", parseInt(value));
-											}else{
-												carParkStatObj.set("num_carpark", 0);
-											}
-											break;
-										case 2:
-											if(!isNaN(parseInt(value))){
-												carParkStatObj.set("num_motorpark", parseInt(value));
-											}else{
-												carParkStatObj.set("num_motorpark", 0);
-											}
-											break;
-										case 3:
-											//Update Time: Use the default updatedAt
-											break;
-										default:
-											break;
-									}
+							var value = $.trim($(this).text());
+							
+							$("#status").append(value + "<br>");
+							
+							if(value.length){
+								switch(index2){
+									case 0:
+										object.set("name", value);
+										break;
+									case 1:
+										if(!isNaN(parseInt(value))){
+											object.set("numCarPark", parseInt(value));
+										}else{
+											object.set("numCarPark", 0);
+										}
+										break;
+									case 2:
+										if(!isNaN(parseInt(value))){
+											object.set("numMotorPark", parseInt(value));
+										}else{
+											object.set("numMotorPark", 0);
+										}
+										break;
+									case 3:
+										break;
+									default:
+										break;
 								}
-							});
-							carParkStatObj.save();
-						}
-					});
-					
-					// console.log("Created " + numRecord " records at " + new Date());
-					$("#content").append("<div>Created " + numRecord + " records at " + new Date() + "</div>");
-					
-				} ,
-				error: function(error){
-					console.log("Error");
-					console.log(error);
-				}
-			});
-			
-		 }, interval_ms);
-		 
-		 // console.log("End of Code");
-		 
+								
+								var d = new Date();
+								var weekday = new Array(7);
+								weekday[0]=  "sunday";
+								weekday[1] = "monday";
+								weekday[2] = "tuesday";
+								weekday[3] = "wednesday";
+								weekday[4] = "thursday";
+								weekday[5] = "friday";
+								weekday[6] = "saturday";
+								
+								object.set("dayOfWeek", weekday[d.getDay()]);
+								object.set("time", d.getHours() + "" + d.getMinutes());
+							}
+						});
+						
+						return object.save();
+					}
+				});
+			},
+			error: function(error) {
+				console.log(error);
+			}
+		});
 	});
 
 </script>

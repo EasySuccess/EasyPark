@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+	</head>
+	<body>
+		<!-- <div><big>Fetch Car Park Information from DSAT</big></div> -->
+		<!-- <div>This page must keep on so as to keep schedule jobs proceed</div> -->
+		<div id="status"></div>
+		<div id="start-time"></div></br>
+		<div id="content"></div>
+	</body>
+</html>
+<script src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+
+	$( document ).ready ( function() {
+			
+		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
+
+		var ClassParkingData = Parse.Object.extend("Dev_Parking_Data");
+		var query = new Parse.Query(ClassParkingData);
+		query.limit(1000);
+		
+		var d = new Date();
+		
+		var startPeriod = new Date(2000,1,1, d.getHours(), d.getMinutes() - 30, d.getSeconds(), 0);
+		var endPeriod = new Date(2000,1,1, d.getHours(), d.getMinutes() + 30, d.getSeconds(), 0);
+		
+		$("#status").append(startPeriod);
+		$("#status").append("<br>");
+		$("#status").append(endPeriod);
+		$("#status").append("<br>");
+		
+		query.equalTo("name", "栢佳");
+		query.equalTo("dayOfWeek", "wednesday");
+		query.greaterThan("time", startPeriod);
+		query.lessThan("time", endPeriod);
+		
+		query.find().then(function(results){
+			$("#status").append(results.length);
+			$("#status").append("<br>");
+			$.each(results, function(i, result){
+				$("#status").append(result.get("numCarPark"));
+				$("#status").append("<br>");
+			});
+		});
+				
+	});
+
+</script>
