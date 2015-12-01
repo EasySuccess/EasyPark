@@ -19,8 +19,7 @@ li.current{background-color: #ddd;}
 .list-part-detial h4{padding-left: 10px;margin: 0; margin-top: 5px;}
 .list-part-detial .detial{width: 50%;float: left; text-align: center; height: 100px;}
 .list-part-detial .list-num{}
-.list-part-detial .list-sub{font-size: 12px;}
-.list-part-aside{width: 10%;position: relative;margin: 0;float: left; height: 100px;}
+.list-part-detial .list-sub{font-size: 10px;}
 
 
 
