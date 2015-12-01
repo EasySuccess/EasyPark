@@ -1,0 +1,62 @@
+﻿/*.section-hero .item .slider-component{
+	position: relative;
+	display: inline-block;	
+	top: -210px;
+}
+.section-hero .item .slider-component.second-row{
+	margin-top: 10px;
+}
+
+.blackout {
+	width:100%;
+	height:100%; /* make sure you have set parents to a height of 100% too*!/
+	position: absolute;
+	left:0; top:0;
+	z-index:10; /*just to make sure its on top*!/
+	background:rgba(0,0,0,.5);
+	display:none;
+	background-image: url('../img/logo_loading.png');
+	background-repeat: no-repeat; 
+	background-attachment: fixed;
+	background-position: center; 
+}*/
+
+/**************************/
+.predict-topBar{
+	text-align: right; color: #686464;margin-top: 20px;
+}
+.fixedBar{width: 100%; background-color: #ebebeb; position: fixed; bottom: 0; height: 60px;box-shadow: -1px -1px 1px #cfcfcf;}
+.fixedBar > ul{list-style: none;	height: 100%;}
+li.fixedBar-li{float: left;width: 33.3%; text-align: center;}
+li.fixedBar-li a{color: #3c3c3c;}
+li.fixedBar-li img{width: 35px;}
+li.fixedBar-li span{margin: 0 10%;	width: 100%;}
+li.current{background-color: #ddd;}
+
+.carpark-description{width: 100%;text-align: right;}
+
+.list-part{list-style: none; padding-top: 10px; padding-bottom: 10px;position: relative;margin: 0;}
+.list-part li{height: 100px; border-top:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;}
+.list-part-img{width: 110px;position: relative;margin: 0;float: left;height: 100px;}
+.list-part-detial{width: 60%;position: relative;margin: 0;float: left; color: #5c5c5c; height: 100px;}
+.list-part-detial h4{padding-left: 10px;margin: 0; margin-top: 5px;}
+.list-part-detial .detial{width: 50%;float: left; text-align: center; height: 100px;}
+.list-part-detial .list-num{}
+.list-part-detial .list-sub{font-size: 12px;}
+.list-part-aside{width: 10%;position: relative;margin: 0;float: left; height: 100px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

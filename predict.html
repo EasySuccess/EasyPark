@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+    <title>MACAU CarPark</title>
+    <meta name="description" content="MACAU CarPark  " />
+    <meta name="author" content="MACAU CarPark" />
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <link rel="stylesheet" href="css/screen.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    
+</head>
+<body>
+	<!-- Page Wrapper -->
+	<div id="">		
+		<!-- Header -->
+		<header>
+			<div class="container" style="background-color: #43b9c7;">
+				<div class="row">
+					<div class="col-xs-4 col-sm-3">
+						<a class="brand" href="index.html">
+							<!--<img src="img/RicciLogoLayered.png" alt="logo-image" />-->
+							<h1>CarPark</h1>
+						</a>
+					</div>
+					<div class="col-xs-8 col-sm-9">
+						<div class="predict-topBar">
+							<span data-toggle="modal" data-target="#predictModal" style="cursor: pointer;">選取時間</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</header>
+
+		<!-- Main Content -->
+		<div class="content-wrapper" style="margin-top: 80px;">
+			<div class="container">
+			
+				<div class="row">
+						<div class="carpark-description">最後更新時間:<span>2015-12-31  AM12:00</span></div>
+						
+						<ul class="list-part">	
+							<li class="comp">
+								<a href="#">
+									<div class="list-part-img">
+										<img class="list-img" src="img/carpark01.jpg">
+									</div>
+									<div class="list-part-detial">
+										<h4>下環街市</h4>
+										<div class="detial">
+											<img src="img/car_icon.png" alt="" />
+											<div class="list-num">12</div>
+											<div class="list-sub">汽車位剩餘數量</div>
+										</div>
+										<div class="detial">
+											<img src="img/motor_icon.png" alt="" />
+											<div class="list-num">12</div>
+											<div class="list-sub">電單車位剩餘數量</div>
+										</div>
+									</div>
+									<div class="list-part-aside"></div>
+								</a>
+							</li>
+							
+							<li class="comp">
+								<a href="#">
+									<div class="list-part-img">
+										<img class="list-img" src="img/carpark01.jpg">
+									</div>
+									<div class="list-part-detial">
+										<h4>下環街市</h4>
+										<div class="detial">
+											<img src="img/car_icon.png" alt="" />
+											<div class="list-num">12</div>
+											<div class="list-sub">汽車位剩餘數量</div>
+										</div>
+										<div class="detial">
+											<img src="img/motor_icon.png" alt="" />
+											<div class="list-num">12</div>
+											<div class="list-sub">電單車位剩餘數量</div>
+										</div>
+									</div>
+									<div class="list-part-aside"></div>
+								</a>
+							</li>
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+		
+		<!-- Footer -->
+		<footer class="">
+			<div class="container">
+					<div class="copyrights">
+						<p>Copyright 2015. Designed by <a href="#" target="blank">EST</a><br />以上資料只供參考</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		
+		<nav>
+	    <div id="" class="fixedBar">
+	      <ul>
+			    <li class="fixedBar-li">
+	           <a href="index.html" class=""><img src="img/app.png"><div>即時停車場</div></a>
+		      </li>
+	        <li class="fixedBar-li current">
+               <a href="predict.html" class=""><img src="img/app.png"/><div>預測停車資料</div></a>
+	        </li>
+		      <li class="fixedBar-li">
+		             <a href="#" class=""><img src="img/app.png"/><div>其他</div></a>
+		      </li>                            
+	      </ul>
+	    </div>
+	  </nav>
+
+	</div>
+
+<!--REGISTER-->
+<div class="modal fade" id="predictModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h1 style="text-align: center;">預測停車場資料</h1>
+            </div>
+			
+			<div class="blackout"></div>
+			
+			<form role="form" data-toggle="validator" class="RegisterLogin" id="registerForm">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="type" class="control-label">停車場：</label>
+						<select class="form-control" id="type">
+							<option value="">下環街</option>
+							<option value="">氹仔中央公園</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="username" class="control-label">日期：</label>
+						<input type="text" class="form-control" id="username" data-minlength="3" data-error="至少3個字元" required>
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="form-group">
+						<label for="name" class="control-label">時間：</label>
+						<input type="text" class="form-control" id="name" name="" required>
+					</div>
+				</div>
+				<div class="modal-footer form-group">
+					<button type="close" class="btn theme-btn-2" data-dismiss="modal">取消</button>
+					<button type="login" class="btn theme-btn-2" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">確定</button>
+				</div>
+			</form>
+        </div>
+    </div>
+</div>
+<!--[end]REGISTER-->
+
+
+	<!-- Scripts -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	
+	<script>
+	$(document).ready(function() {
+		
+	});
+	</script>
+	
+</body>
+</html>
