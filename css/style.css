@@ -11,7 +11,7 @@ li.current{background-color: #ddd;}
 
 .carpark-description{width: 100%;text-align: right;}
 
-.list-part{list-style: none; padding-top: 10px; padding-bottom: 10px;position: relative;margin: 0;}
+.list-part{list-style: none; padding-top: 10px; padding-bottom: 10px;position: relative;margin: 0;overflow: hidden;}
 .list-part li{height: 120px; border-top:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;}
 .list-part-img{width: 30%px;position: relative;margin: 0;float: left;height: 100px; margin-top: 10px;}
 .list-img{width: 110px;}
