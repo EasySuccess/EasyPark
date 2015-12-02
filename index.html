@@ -45,7 +45,7 @@
             <div class="container">
 				<h1 id="bodyTop">資料載入中...</h1>
                 <div class="row hide" id="bodyContainer">
-                    <div class="carpark-description">最後更新時間:<span id="updateTime"></span></div>
+                    <div class="carpark-description">最後更新時間 (每10秒自動更新)：<span id="updateTime"></span></div>
                     <ul class="list-part" id="listPart">
 					
                         <li class="comp">
@@ -98,7 +98,7 @@
                 </li>
                 <li class="fixedBar-li">
                     <a href="predict.html" class=""><img src="img/app.png" />
-                        <div>預測停車資料</div>
+                        <div>預測泊車成功率</div>
                     </a>
                 </li>
                 <li class="fixedBar-li">
@@ -128,10 +128,15 @@
 			
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 		
-		var Interval = setInterval(function() {
+		buildBodyContainer(template);
+		autoRefresh(template, 10000);
+		
+	});
+	
+	function buildBodyContainer(template){
+	
+		Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
 					
-			Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
-						
 			console.log(result);
 						
 			if(!result.success){
@@ -158,23 +163,31 @@
 				var momentDate = moment();
 				
 				$("#updateTime").empty();
-				$("#updateTime").append(momentDate.format("YYYY-MM-DD hh:mm A"));
+				//$("#updateTime").append(momentDate.format("YYYY-MM-DD hh:mm:ss A"));
+				$("#updateTime").append(momentDate.format("hh:mm:ss A"));
 				
 				$("#bodyContainer").removeClass("hide");
 				$("#bodyTop").addClass("hide");
 				$(".blackout").hide();
 			}
-			
-			},function(error){
-			
-				console.log(error);
-				
-			});
-			
-		}, 60000);
 		
-
-	});
+		},function(error){
+		
+			console.log(error);
+			
+		});
+		
+	}
+	
+	function autoRefresh(template, interval){
+	
+		var Interval = setInterval(function() {
+			
+			buildBodyContainer(template);
+			
+		}, interval);
+		
+	}
 	
 	
 </script>
