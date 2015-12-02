@@ -306,7 +306,13 @@
 								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "% (平均" + data.numWeightedCarPark + "個)");
 								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "% (平均" + data.numWeightedMotorPark + "個)");
 							
+						}else{
+						
+								$("#listNearBy").append(template);
+								$("#listNearBy li:eq(" + i + ")").hide();
+								
 						}
+						
 					}, function(error){
 						console.log(error);
 					});
