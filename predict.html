@@ -218,14 +218,25 @@
 <script>
 	$(document).ready(function() {
 	
-		//Preload in the search form
-		var today = moment();
-		$("#inputDate").val(today.format('YYYY-MM-DD'));
-		$("#inputTime").val(today.format("HH:MM"));
-		
-	
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
-
+	
+		//Preload in the search form
+		if(getStoredValue("name") != null){
+			
+			var cacheName = getStoredValue("name");
+			var cacheDate = getStoredValue("date");
+			
+			var date = moment(new Date(cacheDate));
+			$("#inputDate").val(date.format('YYYY-MM-DD'));
+			$("#inputTime").val(date.format("HH:MM"));
+			
+			$('select option[value="' + cacheName + '"]').attr("selected",true);
+		}else{
+			var today = moment();
+			$("#inputDate").val(today.format('YYYY-MM-DD'));
+			$("#inputTime").val(today.format("HH:MM"));
+		}
+	
 		var result = JSON.parse(getStoredValue("result"));
 		
 		//Display result only after searchForm store value in localStorage
@@ -317,7 +328,10 @@
 				var name = $("#parkName").val();
 				var momentDate = moment($("#inputDate").val() + " " + $("#inputTime").val(), "YYYY-MM-DD HH:mm");
 				var date = momentDate.toDate();
-				var dayOfWeek = getDayOfWeek(date);		
+				var dayOfWeek = getDayOfWeek(date);
+				
+				storeValue("name", name);
+				storeValue("date", date);
 								
 				Parse.Cloud.run("getPredictParkingData", 
 					{
