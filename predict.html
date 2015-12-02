@@ -60,12 +60,14 @@
                                     <div class="detial">
                                         <img src="img/car_icon.png" alt="" />
                                         <div class="list-num"></div>
-                                        <div class="list-sub">汽車位剩餘數量</div>
+                                        <div class="list-sub"></div>
+                                        <!-- <div class="list-sub">汽車位剩餘數量</div> -->
                                     </div>
                                     <div class="detial">
                                         <img src="img/motor_icon.png" alt="" />
                                         <div class="list-num"></div>
-                                        <div class="list-sub">電單車位剩餘數量</div>
+                                        <div class="list-sub"></div>
+                                        <!-- <div class="list-sub">電單車位剩餘數量</div> -->
                                     </div>
                                 </div>
                             </a>
@@ -261,8 +263,11 @@
 				$("#listPart li:eq(0) .list-img").attr("src", "img/" + data.name + ".jpg");
 				// $("#listPart li:eq(0) .detial:eq(0) div:eq(0)").html(data.carSuccessRate + "% (平均" + data.numCarPark + "個)");
 				// $("#listPart li:eq(0) .detial:eq(1) div:eq(0)").html(data.motorSuccessRate + "% (平均" + data.numMotorPark + "個)");
-				$("#listPart li:eq(0) .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "% (平均" + data.numWeightedCarPark + "個)");
-				$("#listPart li:eq(0) .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "% (平均" + data.numWeightedMotorPark + "個)");
+				
+				$("#listPart li:eq(0) .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "%");
+				$("#listPart li:eq(0) .detial:eq(0) div:eq(1)").html("平均" + data.numWeightedCarPark + "個");
+				$("#listPart li:eq(0) .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "%");
+				$("#listPart li:eq(0) .detial:eq(1) div:eq(1)").html("平均" + data.numWeightedMotorPark + "個");
 			
 			
 				var criteria = result.criteria;
@@ -300,11 +305,15 @@
 								$("#listNearBy").append(template);								
 								$("#listNearBy li:eq(" + i + ") h4").html(data.name);
 								$("#listNearBy li:eq(" + i + ") .list-img").attr("src", "img/" + data.name + ".jpg");
-								// $("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carSuccessRate + "% (平均" + data.numCarPark + "個)");
-								// $("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorSuccessRate + "% (平均" + data.numMotorPark + "個)");
 								
-								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "% (平均" + data.numWeightedCarPark + "個)");
-								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "% (平均" + data.numWeightedMotorPark + "個)");
+								//$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "% (平均" + data.numWeightedCarPark + "個)");
+								//$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "% (平均" + data.numWeightedMotorPark + "個)");
+								
+								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "%");
+								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(1)").html("平均" + data.numWeightedCarPark + "個");
+								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "%");
+								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(1)").html("平均" + data.numWeightedMotorPark + "個");
+								
 							
 						}else{
 						
