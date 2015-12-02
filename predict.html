@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
     <title>MACAU CarPark</title>
     <meta name="description" content="MACAU CarPark  " />
     <meta name="author" content="MACAU CarPark" />
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <!-- <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" /> -->
 
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -15,165 +16,363 @@
     <link rel="stylesheet" href="css/icomoon.css" />
     <link rel="stylesheet" href="css/screen.css" />
     <link rel="stylesheet" href="css/style.css" />
-    
+
 </head>
+
 <body>
-	<!-- Page Wrapper -->
-	<div id="">		
-		<!-- Header -->
-		<header>
-			<div class="container" style="background-color: #43b9c7; height: 50px;">
-				<div class="row">
-					<div class="col-xs-4 col-sm-3">
-						<a class="brand" href="index.html">
-							<!--<img src="img/RicciLogoLayered.png" alt="logo-image" />-->
-							<h1 style="margin: 10px;">CarPark</h1>
-						</a>
-					</div>
-					<div class="col-xs-8 col-sm-9">
-						<div class="predict-topBar">
-							<span data-toggle="modal" data-target="#predictModal" style="cursor: pointer;">選取時間</span>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</header>
-
-		<!-- Main Content -->
-		<div class="content-wrapper" style="margin-top: 80px;">
-			<div class="container">
-			
-				<div class="row">
-						<div class="carpark-description">最後更新時間:<span>2015-12-31  AM12:00</span></div>
-						<ul class="list-part">	
-							<li class="comp">
-								<a href="#">
-									<div class="list-part-img">
-										<img class="list-img" src="img/carpark01.jpg">
-									</div>
-									<div class="list-part-detial">
-										<h4>下環街市</h4>
-										<div class="detial">
-											<img src="img/car_icon.png" alt="" />
-											<div class="list-num">12</div>
-											<div class="list-sub">汽車位剩餘數量</div>
-										</div>
-										<div class="detial">
-											<img src="img/motor_icon.png" alt="" />
-											<div class="list-num">12</div>
-											<div class="list-sub">電單車位剩餘數量</div>
-										</div>
-									</div>
-								</a>
-							</li>
-							
-							<li class="comp">
-								<a href="#">
-									<div class="list-part-img">
-										<img class="list-img" src="img/carpark01.jpg">
-									</div>
-									<div class="list-part-detial">
-										<h4>下環街市</h4>
-										<div class="detial">
-											<img src="img/car_icon.png" alt="" />
-											<div class="list-num">12</div>
-											<div class="list-sub">汽車位剩餘數量</div>
-										</div>
-										<div class="detial">
-											<img src="img/motor_icon.png" alt="" />
-											<div class="list-num">12</div>
-											<div class="list-sub">電單車位剩餘數量</div>
-										</div>
-									</div>
-								</a>
-							</li>
-							
-						</ul>
-					</div>
-				</div>
-			</div>
-			
-			
-		</div>
-		
-		<!-- Footer -->
-		<footer class="">
-			<div class="container">
-					<div class="copyrights">
-						<p>Copyright 2015. Designed by <a href="#" target="blank">EST</a><br />以上資料只供參考</p>
-					</div>
-				</div>
-			</div>
-		</footer>
-		
-		<nav>
-	    <div id="" class="fixedBar">
-	      <ul>
-			    <li class="fixedBar-li">
-	           <a href="index.html" class=""><img src="img/app.png"><div>即時停車場</div></a>
-		      </li>
-	        <li class="fixedBar-li current">
-               <a href="predict.html" class=""><img src="img/app.png"/><div>預測停車資料</div></a>
-	        </li>
-		      <li class="fixedBar-li">
-		             <a href="#" class=""><img src="img/app.png"/><div>其他</div></a>
-		      </li>                            
-	      </ul>
-	    </div>
-	  </nav>
-
-	</div>
-
-<!--REGISTER-->
-<div class="modal fade" id="predictModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h1 style="text-align: center;">預測停車場資料</h1>
+    <!-- Page Wrapper -->
+    <div id="">
+        <!-- Header -->
+        <header>
+            <div class="container" style="background-color: #43b9c7; height: 50px;">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3">
+                        <a class="brand" href="index.html">
+                            <!--<img src="img/RicciLogoLayered.png" alt="logo-image" />-->
+                            <h1 style="margin: 10px;">CarPark</h1>
+                        </a>
+                    </div>
+                    <div class="col-xs-8 col-sm-9">
+                        <div class="predict-topBar">
+                            <span data-toggle="modal" data-target="#predictModal" style="cursor: pointer;">選取時間</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-			
-			<div class="blackout"></div>
-			
-			<form role="form" data-toggle="validator" class="RegisterLogin" id="registerForm">
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="type" class="control-label">停車場：</label>
-						<select class="form-control" id="type">
-							<option value="">下環街</option>
-							<option value="">氹仔中央公園</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="username" class="control-label">日期：</label>
-						<input type="date" id="inputDate"></input>
-					</div>
-					<div class="form-group">
-						<label for="name" class="control-label">時間：</label>
-						<input type="time" id="inputTime"></input>
-					</div>
-				</div>
-				<div class="modal-footer form-group">
-					<button type="close" class="btn theme-btn-2" data-dismiss="modal">取消</button>
-					<button type="login" class="btn theme-btn-2" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">搜索</button>
-				</div>
-			</form>
+
+        </header>
+
+        <!-- Main Content -->
+        <div class="content-wrapper" style="margin-top: 80px;">
+            <div class="container">
+				<h1 id="bodyTop">請先選擇時間</h1>
+
+                <div class="row hide"  id="bodyContainer">
+                    <div class="carpark-description">搜索條件:<span id="criteria"></span></div>
+                    <ul class="list-part" id="listPart">
+                        <li class="comp">
+                            <a href="#">
+                                <div class="list-part-img">
+                                    <img class="list-img" src="img/carpark01.jpg">
+                                </div>
+                                <div class="list-part-detial">
+                                    <h4></h4>
+                                    <div class="detial">
+                                        <img src="img/car_icon.png" alt="" />
+                                        <div class="list-num"></div>
+                                        <div class="list-sub">汽車位剩餘數量</div>
+                                    </div>
+                                    <div class="detial">
+                                        <img src="img/motor_icon.png" alt="" />
+                                        <div class="list-num"></div>
+                                        <div class="list-sub">電單車位剩餘數量</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+					
+					<h4>附近停車場 (由近至遠)</h4>
+					<ul class="list-part" id="listNearBy">
+                        <li class="comp">
+                            <a href="#">
+                                <div class="list-part-img">
+                                    <img class="list-img" src="img/carpark01.jpg">
+                                </div>
+                                <div class="list-part-detial">
+                                    <h4></h4>
+                                    <div class="detial">
+                                        <img src="img/car_icon.png" alt="" />
+                                        <div class="list-num"></div>
+                                        <div class="list-sub">汽車位剩餘數量</div>
+                                    </div>
+                                    <div class="detial">
+                                        <img src="img/motor_icon.png" alt="" />
+                                        <div class="list-num"></div>
+                                        <div class="list-sub">電單車位剩餘數量</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="">
+        <div class="container">
+            <div class="copyrights">
+                <p>Copyright 2015. Designed by <a href="#" target="blank">EST</a>
+                    <br />以上資料只供參考</p>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <nav>
+        <div id="" class="fixedBar">
+            <ul>
+                <li class="fixedBar-li">
+                    <a href="index.html" class=""><img src="img/app.png">
+                        <div>即時停車場</div>
+                    </a>
+                </li>
+                <li class="fixedBar-li current">
+                    <a href="predict.html" class=""><img src="img/app.png" />
+                        <div>預測停車資料</div>
+                    </a>
+                </li>
+                <li class="fixedBar-li">
+                    <a href="#" class=""><img src="img/app.png" />
+                        <div>其他</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    </div>
+
+    <!--SEARCH-->
+    <div class="modal fade" id="predictModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h1 style="text-align: center;">預測停車場資料</h1>
+                </div>
+
+                <div class="blackout"></div>
+
+                <form role="form" data-toggle="validator" class="RegisterLogin" id="searchForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="type" class="control-label">停車場：</label>
+                            <select class="form-control" id="parkName">
+								  <option value="下環街市">下環街市</option>
+								  <option value="永寧街">永寧街</option>
+								  <option value="氹仔中央公園">氹仔中央公園</option>
+								  <option value="交通事務局大樓">交通事務局大樓</option>
+								  <option value="何賢公園">何賢公園</option>
+								  <option value="宋玉生廣場">宋玉生廣場</option>
+								  <option value="快富樓">快富樓</option>
+								  <option value="居雅大廈">居雅大廈</option>
+								  <option value="亞馬喇前地">亞馬喇前地</option>
+								  <option value="馬六甲街">馬六甲街</option>
+								  <option value="河邊新街">河邊新街</option>
+								  <option value="青翠樓">青翠樓</option>
+								  <option value="南灣(栢湖)">南灣(栢湖)</option>
+								  <option value="青葱大廈">青葱大廈</option>
+								  <option value="科學館">科學館</option>
+								  <option value="栢佳">栢佳</option>
+								  <option value="栢港">栢港</option>
+								  <option value="栢寧">栢寧</option>
+								  <option value="栢蕙">栢蕙</option>
+								  <option value="栢濤">栢濤</option>
+								  <option value="栢麗">栢麗</option>
+								  <option value="祐漢公園">祐漢公園</option>
+								  <option value="望善樓">望善樓</option>
+								  <option value="黑橋街">黑橋街</option>
+								  <option value="望賢樓">望賢樓</option>
+								  <option value="湖畔大廈">湖畔大廈</option>
+								  <option value="華士古達嘉馬花園">華士古達嘉馬花園</option>
+								  <option value="業興大廈">業興大廈</option>
+								  <option value="蓮花路">蓮花路</option>
+								  <option value="藝園">藝園</option>
+								  <option value="樂群樓">樂群樓</option>
+								  <option value="麗都">麗都</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="control-label">日期：</label>
+                            <input type="date" id="inputDate" required></input>
+                        </div>
+                        <div class="form-group">
+                            <label for="time" class="control-label">時間：</label>
+                            <input type="time" id="inputTime" required></input>
+                        </div>
+                    </div>
+                    <div class="modal-footer form-group">
+                        <button type="submit" class="btn theme-btn-2">搜索</button>
+                        <button type="close" class="btn theme-btn-2" data-dismiss="modal">取消</button>
+                        <!-- <button type="submit" class="btn theme-btn-2" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">搜索</button> -->
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<!--[end]REGISTER-->
+    <!--[end]SEARCH-->
 
+</body>
 
-	<!-- Scripts -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	
-	<script>
+<!-- Scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="http://www.parsecdn.com/js/parse-1.5.0.min.js"></script>
+<script src="http://momentjs.com/downloads/moment.js"></script>
+
+<script>
 	$(document).ready(function() {
+	
+		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
+
+		var result = JSON.parse(getStoredValue("result"));
+		
+		if( result != null ){
+			
+			console.log(result);
+					
+			if(!result.success){
+			
+				alert("讀取資料失敗。");
+				
+			}else{					
+								
+				var template = $("#listPart").html();
+				$("#listPart").empty();
+				$("#listNearBy").empty();
+					
+				var data = result.data;
+									
+				$("#listPart").append(template);
+				$("#listPart li:eq(0) h4").html(data.name);
+				$("#listPart li:eq(0) .detial:eq(0) div:eq(0)").html(data.carSuccessRate + "% (平均" + data.numCarPark + "個)");
+				$("#listPart li:eq(0) .detial:eq(1) div:eq(0)").html(data.motorSuccessRate + "% (平均" + data.numMotorPark + "個)");
+			
+			
+				var criteria = result.criteria;
+				var momentDate = moment(criteria.dateTime);
+				
+				$("#criteria").empty();
+				$("#criteria").append(criteria.name + ", " + momentDate.format("YYYY-MM-DD hh:mm A"));				
+				
+				
+				var date = momentDate.toDate();
+				var dayOfWeek = criteria.dayOfWeek
+				var nearbyPark = data.nearby_park;
+				var promise = Parse.Promise.as();
+
+				$.each(nearbyPark, function(i, nearParkName){
+					
+					promise = promise.then(function(){
+						
+						return Parse.Cloud.run("getPredictParkingData", 
+							{
+								dateTime: date, 
+								location: nearParkName,
+								dayOfWeek: dayOfWeek,
+								skipNearby: true
+							});
+							
+					}).then(function(result){
+						
+						console.log(result);
+						
+						if(result.success){
+
+								var data = result.data;
+													
+								$("#listNearBy").append(template);								
+								$("#listNearBy li:eq(" + i + ") h4").html(data.name);
+								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carSuccessRate + "% (平均" + data.numCarPark + "個)");
+								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorSuccessRate + "% (平均" + data.numMotorPark + "個)");
+							
+						}
+					}, function(error){
+						console.log(error);
+					});
+				})
+				
+			}
+			
+			$("#bodyContainer").removeClass("hide");
+			$("#bodyTop").addClass("hide");
+			removeStoredValue("result");
+		}
+
+		$("#searchForm").submit(function(e) {
+	
+			if (!e.isDefaultPrevented()) {
+						
+				var name = $("#parkName").val();
+				var momentDate = moment($("#inputDate").val() + " " + $("#inputTime").val(), "YYYY-MM-DD HH:mm");
+				var date = momentDate.toDate();
+				var dayOfWeek = getDayOfWeek(date);		
+								
+				Parse.Cloud.run("getPredictParkingData", 
+					{
+						dateTime: date, 
+						location: name,
+						dayOfWeek: dayOfWeek,
+						skipNearby: false
+					}).then(function(result){
+					
+					storeValue("result", JSON.stringify(result));					
+
+					window.location.reload();
+					
+				}, function(error){
+					console.log(error);
+				});
+				
+				e.preventDefault();
+			}
+			
+		});
 		
 	});
-	</script>
 	
-</body>
+		
+	function getDayOfWeek(argDate){
+		
+		var weekday = new Array(7);
+		weekday[0]=  "sunday";
+		weekday[1] = "monday";
+		weekday[2] = "tuesday";
+		weekday[3] = "wednesday";
+		weekday[4] = "thursday";
+		weekday[5] = "friday";
+		weekday[6] = "saturday";
+		
+		return weekday[argDate.getDay()];
+	}
+	
+	function formatFloat(num, pos){
+	  var size = Math.pow(10, pos);
+	  return Math.round(num * size) / size;
+	}
+	
+	//Cookie Function
+	function storeValue(key, value) {
+		if (localStorage) {
+			localStorage.setItem(key, value);
+		} else {
+			$.cookies.set(key, value);
+		}
+	}
+
+	function getStoredValue(key) {
+		if (localStorage) {
+			return localStorage.getItem(key);
+		} else {
+			return $.cookies.get(key);
+		}
+	}
+	
+	function removeStoredValue(key){
+		if(localStorage){
+			localStorage.removeItem(key);
+		} else {
+			$.removeCookie(key);
+		}
+	}
+
+	
+</script>
+
+
 </html>
