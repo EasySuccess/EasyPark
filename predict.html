@@ -266,9 +266,12 @@
 				
 				$("#listPart li:eq(0) .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "%");
 				$("#listPart li:eq(0) .detial:eq(0) div:eq(1)").html("平均" + data.numWeightedCarPark + "個");
+				$("#listPart li:eq(0) .detial:eq(0) div:eq(0)").css('color', getColorStyle(data.carWeightedSuccessRate));
+				
 				$("#listPart li:eq(0) .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "%");
 				$("#listPart li:eq(0) .detial:eq(1) div:eq(1)").html("平均" + data.numWeightedMotorPark + "個");
-			
+				$("#listPart li:eq(0) .detial:eq(1) div:eq(0)").css('color', getColorStyle(data.motorWeightedSuccessRate));
+				
 			
 				var criteria = result.criteria;
 				var momentDate = moment(criteria.dateTime);
@@ -311,9 +314,11 @@
 								
 								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "%");
 								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(1)").html("平均" + data.numWeightedCarPark + "個");
+								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").css('color', getColorStyle(data.carWeightedSuccessRate));
+								
 								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "%");
 								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(1)").html("平均" + data.numWeightedMotorPark + "個");
-								
+								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").css('color', getColorStyle(data.motorWeightedSuccessRate));
 							
 						}else{
 						
@@ -413,6 +418,22 @@
 			localStorage.removeItem(key);
 		} else {
 			$.removeCookie(key);
+		}
+	}
+	
+	function getColorStyle(num){
+		
+		if(num <= 0){
+			return "Red";
+		}else if( num > 0 & num <= 30){
+			return "Orange";
+		}else if( num > 30 & num <= 60){	
+			return "Khaki";
+		}else if( num > 60 & num <= 90){
+			return "Blue";
+		}else if( num > 90){
+			return "GreenYellow ";
+		}else{
 		}
 	}
 
