@@ -218,10 +218,17 @@
 <script>
 	$(document).ready(function() {
 	
+		//Preload in the search form
+		var today = moment();
+		$("#inputDate").val(today.format('YYYY-MM-DD'));
+		$("#inputTime").val(today.format("HH:MM"));
+		
+	
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 
 		var result = JSON.parse(getStoredValue("result"));
 		
+		//Display result only after searchForm store value in localStorage
 		if( result != null ){
 			
 			console.log(result);
@@ -291,6 +298,8 @@
 			
 			$("#bodyContainer").removeClass("hide");
 			$("#bodyTop").addClass("hide");
+			
+			//Remove result from localStorage
 			removeStoredValue("result");
 		}
 
