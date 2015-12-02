@@ -21,8 +21,16 @@ li.current{background-color: #ddd;}
 .list-part-detial .list-num{}
 .list-part-detial .list-sub{font-size: 10px;}
 
-
-
+.blackout {
+	width:100%;
+	height:100%; /* make sure you have set parents to a height of 100% too*/
+	position: absolute;
+	left:0; top:0;
+	z-index:10; /*just to make sure its on top*/
+	/* background-image:url(../img/logo.png);  */
+	background:rgba(0,0,0,.5);
+	display:none;
+}
 
 
 

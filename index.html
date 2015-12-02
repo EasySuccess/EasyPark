@@ -39,6 +39,9 @@
 
         <!-- Main Content -->
         <div class="content-wrapper" style="margin-top: 80px;">
+		
+			<div class="blackout"></div>
+			
             <div class="container">
 				<h1 id="bodyTop">資料載入中...</h1>
                 <div class="row hide" id="bodyContainer">
@@ -119,10 +122,15 @@
 <script>
 	
 	$(document).ready(function() {
+	
+		$(".blackout").show();
+		var template = $("#listPart").html();
 			
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 		
-		Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
+		var Interval = setInterval(function() {
+					
+			Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
 						
 			console.log(result);
 						
@@ -132,7 +140,6 @@
 				
 			}else{
 			
-				var template = $("#listPart").html();
 				$("#listPart").empty();
 					
 				var data = result.data;
@@ -155,15 +162,21 @@
 				
 				$("#bodyContainer").removeClass("hide");
 				$("#bodyTop").addClass("hide");
+				$(".blackout").hide();
 			}
 			
-		},function(error){
-		
-			console.log(error);
+			},function(error){
 			
-		});
+				console.log(error);
+				
+			});
+			
+		}, 60000);
+		
 
 	});
+	
+	
 </script>
 
 </html>
