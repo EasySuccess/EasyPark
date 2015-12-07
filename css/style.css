@@ -1,6 +1,7 @@
-﻿.predict-topBar{
-	text-align: right; color: #686464;margin-top: 20px;
+﻿.brand img{
+	height: 60px;
 }
+.predict-topBar{text-align: right; color: #4b4b4b;margin-top: 15px;}
 .fixedBar{width: 100%; background-color: #ebebeb; position: fixed; bottom: 0; height: 60px;box-shadow: -1px -1px 1px #cfcfcf;}
 .fixedBar > ul{list-style: none;	height: 100%;}
 li.fixedBar-li{float: left;width: 33.3%; text-align: center;}
@@ -27,8 +28,11 @@ li.current{background-color: #ddd;}
 	position: absolute;
 	left:0; top:0;
 	z-index:10; /*just to make sure its on top*/
-	/* background-image:url(../img/logo.png);  */
 	background:rgba(0,0,0,.5);
+	background-image: url('../img/epark_logo_loading.png');
+	background-repeat: no-repeat; 
+	background-attachment: fixed;
+	background-position: center; 
 	display:none;
 }
 
