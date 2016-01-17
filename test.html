@@ -141,12 +141,12 @@
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
 		} else {
-			alert("Geolocation is not supported by this browser.");
+			$("#listPart").append("Geolocation is not supported by this browser.");
 		}
 	}
 	
 	function showPosition(position) {
-		alert("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+		$("#listPart").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 	}
 	
 	function buildBodyContainer(template){
