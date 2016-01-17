@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>MACAU CarPark</title>
+    <meta name="description" content="MACAU CarPark  " />
+    <meta name="author" content="MACAU CarPark" />
+    <!-- <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" /> -->
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <link rel="stylesheet" href="css/screen.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+    <!-- Page Wrapper -->
+    <div id="">
+        <!-- Header -->
+        <header>
+            <div class="container" style="background-color: #81C7D4; height: 50px;">
+                <div class="row" style="">
+                    <div class="col-xs-4 col-sm-3">
+                        <a class="brand" href="index.html">
+                            <img src="img/epark_logo.png" alt="logo-image" />
+                            <!--<h1 style="margin: 10px;">CarPark</h1>-->
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- Main Content -->
+        <div class="content-wrapper" style="margin-top: 80px;">
+		
+			<div class="blackout"></div>
+			
+            <div class="container">
+				<h1 id="bodyTop">資料載入中...</h1>
+                <div class="row hide" id="bodyContainer">
+                    <div class="carpark-description">最後更新時間 (每10秒自動更新)：<span id="updateTime"></span></div>
+                    <ul class="list-part" id="listPart">
+					
+                        <li class="comp">
+                            <!-- <a href="#"> -->
+                                <div class="list-part-img">
+                                    <img class="list-img" src="img/default.jpg" onerror="this.src='img/default.jpg'">
+                                </div>
+                                <div class="list-part-detial">
+                                    <h4></h4>
+                                    <div class="detial">
+                                        <img src="img/car_icon.png" alt="" />
+                                        <div class="list-num"></div>
+                                        <div class="list-sub">汽車位剩餘數量</div>
+                                    </div>
+                                    <div class="detial">
+                                        <img src="img/motor_icon.png" alt="" />
+                                        <div class="list-num"></div>
+                                        <div class="list-sub">電單車位剩餘數量</div>
+                                    </div>
+                                </div>
+                            <!-- </a> -->
+                        </li>
+						
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="">
+        <div class="container">
+            <div class="copyrights">
+                <p>Copyright 2015. Designed by <a href="#" target="blank">EST</a>
+                    <br />以上資料只供參考</p>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <nav>
+        <div id="" class="fixedBar">
+            <ul>
+                <li class="fixedBar-li current">
+                    <a href="index.html" class=""><img src="img/home.png">
+                        <div>即時停車場</div>
+                    </a>
+                </li>
+                <li class="fixedBar-li">
+                    <a href="predict.html" class=""><img src="img/carpark.png" />
+                        <div>預測泊車成功率</div>
+                    </a>
+                </li>
+                <li class="fixedBar-li">
+                    <a href="#" class=""><img src="img/setting.png" />
+                        <div>其他</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    </div>
+	
+</body>
+<!-- Scripts -->
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/parse-1.6.7.min.js"></script>
+<script src="js/moment.js"></script>
+
+<script>
+	
+	$(document).ready(function() {
+	
+		// $(".blackout").show();
+		var template = $("#listPart").html();
+			
+		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
+		
+		console.log(navigator);
+		
+		getLocation();
+		
+		// buildBodyContainer(template);
+		// autoRefresh(template, 10000);
+		
+	});
+	
+	function getLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+	}
+	
+	function showPosition(position) {
+		alert("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+	}
+	
+	function buildBodyContainer(template){
+	
+		Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
+					
+			console.log(result);
+						
+			if(!result.success){
+			
+				alert("讀取資料失敗。");
+				
+			}else{
+			
+				$("#listPart").empty();
+					
+				var data = result.data;
+				
+				$.each(data, function(i, park){
+					
+					$("#listPart").append(template);
+					
+					$("#listPart li:eq(" + i + ") h4").html(park.name);
+					$("#listPart li:eq(" + i + ") .list-img").attr("src", "img/" + park.name + ".jpg");
+					$("#listPart li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(park.numCarPark);
+					$("#listPart li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(park.numMotorPark);
+					
+				});
+				
+				var momentDate = moment();
+				
+				$("#updateTime").empty();
+				//$("#updateTime").append(momentDate.format("YYYY-MM-DD hh:mm:ss A"));
+				$("#updateTime").append(momentDate.format("hh:mm:ss A"));
+				
+				$("#bodyContainer").removeClass("hide");
+				$("#bodyTop").addClass("hide");
+				$(".blackout").hide();
+			}
+		
+		},function(error){
+		
+			console.log(error);
+			
+		});
+		
+	}
+	
+	function autoRefresh(template, interval){
+	
+		var Interval = setInterval(function() {
+			
+			buildBodyContainer(template);
+			
+		}, interval);
+		
+	}
+	
+	
+</script>
+
+</html>
