@@ -138,15 +138,16 @@
 	});
 	
 	function getLocation() {
+		$("#bodyTop").append("Calling GPS");
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(showPosition);
 		} else {
-			$("#listPart").append("Geolocation is not supported by this browser.");
+			$("#bodyTop").append("Geolocation is not supported by this browser.");
 		}
 	}
 	
 	function showPosition(position) {
-		$("#listPart").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+		$("#bodyTop").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 	}
 	
 	function buildBodyContainer(template){
