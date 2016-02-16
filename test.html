@@ -31,6 +31,9 @@
                             <img src="img/epark_logo.png" alt="logo-image" />
                             <!--<h1 style="margin: 10px;">CarPark</h1>-->
                         </a>
+						<a href="test.html?gps=1">
+                            <img src="img/gps.png" alt="logo-image" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -43,7 +46,6 @@
 			<div class="blackout"></div>
 			
             <div class="container">
-				<h1 id="gpsInfo"></h1>
 				<h1 id="bodyTop">資料載入中...</h1>
                 <div class="row hide" id="bodyContainer">
                     <div class="carpark-description">最後更新時間 (每10秒自動更新)：<span id="updateTime"></span></div>
@@ -119,43 +121,51 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/parse-1.6.7.min.js"></script>
 <script src="js/moment.js"></script>
+<script src="js/getUrlVars.js"></script>
 
 <script>
 
 	$(document).ready(function() {
 	
 		$(".blackout").show();
+		var gpsEnable = getUrlVars()["gps"];
 		var template = $("#listPart").html();
+		var distList;
 			
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 
 		//Get User current location and get the list from nearest
-		var distList = [];
-		Parse.GeoPoint.current().then(function(currentGeoLocation){
-			console.log(currentGeoLocation);
-			// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
-			var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
-			var query = new Parse.Query(ClassParkInfo);
-			query.near("GeoLocation", currentGeoLocation); 
-			query.select("Name");
-			
-			return query.find();
-		}).then(function(results){
 		
-			$.each(results, function(i, result){
-				distList.push(result.get("Name"));
-			});		
+		if(gpsEnable){
+			Parse.GeoPoint.current().then(function(currentGeoLocation){
+				console.log(currentGeoLocation);
+				// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
+				var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
+				var query = new Parse.Query(ClassParkInfo);
+				query.near("GeoLocation", currentGeoLocation); 
+				query.select("Name");
+				
+				return query.find();
+			}).then(function(results){
+				
+				distList = [];
+				
+				$.each(results, function(i, result){
+					distList.push(result.get("Name"));
+				});		
 
-			buildBodyContainer(template, distList);			
+				buildBodyContainer(template, distList);			
+				
+			}, function(error){
+				alert("Cannot read GPS");
+				buildBodyContainer(template);
+			});
 			
-		}, function(error){
-			alert(error);
-			
+		}else{
 			buildBodyContainer(template);
-			
-		});
+		}
 		
-		//autoRefresh(template, 10000);
+		autoRefresh(template, 10000, distList);
 		
 	});
 
@@ -214,11 +224,11 @@
 		
 	}
 	
-	function autoRefresh(template, interval){
+	function autoRefresh(template, interval, distList){
 	
 		var Interval = setInterval(function() {
 			
-			buildBodyContainer(template);
+			buildBodyContainer(template, distList);
 			
 		}, interval);
 		
