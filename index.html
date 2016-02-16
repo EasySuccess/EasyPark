@@ -206,6 +206,19 @@
 		
 	}
 	
+	function getLocation() {
+		$("#bodyTop").append("Calling GPS");
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition);
+		} else {
+			$("#bodyTop").append("Geolocation is not supported by this browser.");
+		}
+	}
+	
+	function showPosition(position) {
+		$("#bodyTop").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+	}
+	
 	
 </script>
 
