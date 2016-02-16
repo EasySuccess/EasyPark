@@ -122,8 +122,6 @@
 
 <script>
 
-	var gps = {};
-	
 	$(document).ready(function() {
 	
 		$(".blackout").show();
@@ -219,10 +217,19 @@
 	}
 	
 	function showPosition(position) {
-		gps.lat = position.coords.latitude;
-		gps.long = position.coords.longitude;
-		//$("#gpsInfo").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
-		$("#gpsInfo").append(JSON.stringify(gps));
+		$("#gpsInfo").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
+		
+		ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
+		var ClassParkingInfo = Parse.Object.extend("Dev_Parking_Info");
+		var query = new Parse.Query(ClassParkingInfo);
+		query.near("GeoLocation", currentGeoLocation); 
+		
+		query.find().then(function(results){
+			$.each(results, function(i, result){
+				$("#gpsInfo").append(result.get("Name"));
+			});			
+		});
+		
 	}
 	
 	function getDistance(lat1,lon1,lat2,lon2) {
