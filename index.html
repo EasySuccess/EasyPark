@@ -31,6 +31,9 @@
                             <img src="img/epark_logo.png" alt="logo-image" />
                             <!--<h1 style="margin: 10px;">CarPark</h1>-->
                         </a>
+						<a href="index.html?gps=1">
+                            <img src="img/gps.png" alt="logo-image" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -118,23 +121,56 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/parse-1.6.7.min.js"></script>
 <script src="js/moment.js"></script>
+<script src="js/getUrlVars.js"></script>
 
 <script>
-	
+
 	$(document).ready(function() {
 	
 		$(".blackout").show();
+		var gpsEnable = getUrlVars()["gps"];
 		var template = $("#listPart").html();
+		var distList;
 			
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
+
+		//Get User current location and get the list from nearest
 		
-		buildBodyContainer(template);
-		//autoRefresh(template, 10000);
-		getParkFee();
+		if(gpsEnable){
+			Parse.GeoPoint.current().then(function(currentGeoLocation){
+				console.log(currentGeoLocation);
+				// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
+				var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
+				var query = new Parse.Query(ClassParkInfo);
+				query.near("GeoLocation", currentGeoLocation); 
+				query.select("Name");
+				
+				return query.find();
+			}).then(function(results){
+				
+				distList = [];
+				
+				$.each(results, function(i, result){
+					distList.push(result.get("Name"));
+				});		
+
+				buildBodyContainer(template, distList);			
+				autoRefresh(template, 10000, distList);
+				
+			}, function(error){
+				alert("讀取GPS資料失敗");
+				buildBodyContainer(template);
+				autoRefresh(template, 10000)
+			});
+			
+		}else{
+			buildBodyContainer(template);
+			autoRefresh(template, 10000)
+		}
 		
 	});
-	
-	function buildBodyContainer(template){
+
+	function buildBodyContainer(template, distList){
 	
 		Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
 					
@@ -142,13 +178,22 @@
 						
 			if(!result.success){
 			
-				alert("讀取資料失敗。");
+				alert("讀取資料失敗");
 				
 			}else{
 			
 				$("#listPart").empty();
-					
-				var data = result.data;
+									
+				console.log(distList);
+				
+				if(distList != undefined){
+					var data = sortByDist(result.data, distList);
+				}
+				else{
+					var data = result.data;
+				}
+				
+				console.log(data);
 				
 				$.each(data, function(i, park){
 					
@@ -180,11 +225,11 @@
 		
 	}
 	
-	function autoRefresh(template, interval){
+	function autoRefresh(template, interval, distList){
 	
 		var Interval = setInterval(function() {
 			
-			buildBodyContainer(template);
+			buildBodyContainer(template, distList);
 			
 		}, interval);
 		
@@ -206,19 +251,23 @@
 		
 	}
 	
-	function getLocation() {
-		$("#bodyTop").append("Calling GPS");
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(showPosition);
-		} else {
-			$("#bodyTop").append("Geolocation is not supported by this browser.");
-		}
-	}
+	function sortByDist(data, distList){
 	
-	function showPosition(position) {
-		$("#bodyTop").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
-	}
+		var results = [];
 	
+		$.each(distList, function(i, name){
+			$.each(data, function(j, park){
+				
+				if(park.name == name){
+					results.push(park);
+					return false;
+				}					
+						
+			});
+		});
+		
+		return results;
+	}
 	
 </script>
 
