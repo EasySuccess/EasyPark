@@ -244,13 +244,15 @@
 	
 		var results = [];
 	
-		$.each(data, function(i, park){
-			
-			if(park.name == distList[0]){
-				results.push(park);
-				distList.shift();
-			}					
-					
+		$.each(distList, function(i, name){
+			$.each(data, function(j, park){
+				
+				if(park.name == name){
+					results.push(park);
+					break;
+				}					
+						
+			});
 		});
 		
 		return results;
