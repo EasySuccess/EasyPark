@@ -219,16 +219,16 @@
 	function showPosition(position) {
 		$("#gpsInfo").append("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude);
 		
-		ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
-		var ClassParkingInfo = Parse.Object.extend("Dev_Parking_Info");
-		var query = new Parse.Query(ClassParkingInfo);
-		query.near("GeoLocation", currentGeoLocation); 
+		// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
+		// var ClassParkingInfo = Parse.Object.extend("Dev_Parking_Info");
+		// var query = new Parse.Query(ClassParkingInfo);
+		// query.near("GeoLocation", currentGeoLocation); 
 		
-		query.find().then(function(results){
-			$.each(results, function(i, result){
-				$("#gpsInfo").append(result.get("Name"));
-			});			
-		});
+		// query.find().then(function(results){
+			// $.each(results, function(i, result){
+				// $("#gpsInfo").append(result.get("Name"));
+			// });			
+		// });
 		
 	}
 	
