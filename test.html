@@ -132,18 +132,19 @@
 		buildBodyContainer(template);
 		//autoRefresh(template, 10000);
 		// getLocation();
-		var currentGeoLocation = new Parse.GeoPoint.current;
-		console.log(currentGeoLocation);
-		// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
-		var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
-		var query = new Parse.Query(ClassParkInfo);
-		query.near("GeoLocation", currentGeoLocation); 
-		
-		query.find().then(function(results){
-			$.each(results, function(i, result){
-				$("#gpsInfo").append(result.get("Name"));
-			});			
-		});
+		Parse.GeoPoint.current().then(function(currentGeoLocation){
+			console.log(currentGeoLocation);
+			// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
+			var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
+			var query = new Parse.Query(ClassParkInfo);
+			query.near("GeoLocation", currentGeoLocation); 
+			
+			query.find().then(function(results){
+				$.each(results, function(i, result){
+					$("#gpsInfo").append(result.get("Name"));
+				});			
+			});
+		}
 		
 	});
 
