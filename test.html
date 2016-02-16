@@ -141,7 +141,7 @@
 			
 			query.find().then(function(results){
 				$.each(results, function(i, result){
-					$("#gpsInfo").append(result.get("Name"));
+					$("#gpsInfo").append(result.get("Name") + "<br>");
 				});			
 			});
 		});
