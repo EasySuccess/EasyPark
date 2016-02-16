@@ -155,17 +155,18 @@
 				});		
 
 				buildBodyContainer(template, distList);			
+				autoRefresh(template, 10000, distList);
 				
 			}, function(error){
-				alert("Cannot read GPS");
+				alert("讀取GPS資料失敗");
 				buildBodyContainer(template);
+				autoRefresh(template, 10000)
 			});
 			
 		}else{
 			buildBodyContainer(template);
+			autoRefresh(template, 10000)
 		}
-		
-		autoRefresh(template, 10000, distList);
 		
 	});
 
@@ -177,7 +178,7 @@
 						
 			if(!result.success){
 			
-				alert("讀取資料失敗。");
+				alert("讀取資料失敗");
 				
 			}else{
 			
