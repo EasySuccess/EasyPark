@@ -330,6 +330,7 @@
 	
 			if (!e.isDefaultPrevented()) {
 						
+				$(".blackout").show();
 				var name = $("#parkName").val();
 				var momentDate = moment($("#inputDate").val() + " " + $("#inputTime").val(), "YYYY-MM-DD HH:mm");
 				var date = momentDate.toDate();
