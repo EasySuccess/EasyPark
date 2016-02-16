@@ -130,21 +130,31 @@
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 
 		buildBodyContainer(template);
-		//autoRefresh(template, 10000);
-		// getLocation();
+		
+		//Get User current location and get the list from nearest
+		var gpsDist = [];
 		Parse.GeoPoint.current().then(function(currentGeoLocation){
 			console.log(currentGeoLocation);
 			// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
 			var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
 			var query = new Parse.Query(ClassParkInfo);
 			query.near("GeoLocation", currentGeoLocation); 
+			query.select("Name");
 			
-			query.find().then(function(results){
-				$.each(results, function(i, result){
-					$("#gpsInfo").append(result.get("Name") + "<br>");
-				});			
-			});
+			return query.find();
+		}).then(function(results){
+		
+			$.each(results, function(i, result){
+				gpsDist.push(result.get("Name"));
+			});			
+			
+			$("#gpsInfo").append(gpsDist);
+			
+		}, function(error){
+			alert(error);
 		});
+		
+		//autoRefresh(template, 10000);
 		
 	});
 
