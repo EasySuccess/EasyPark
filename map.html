@@ -43,9 +43,9 @@
 			<div class="blackout"></div>
 			
             <div class="container">
-				<h1 id="bodyTop">資料載入中...</h1>
+				<h1 id="bodyTop">資料載入中，請耐心等候...</h1>
                 <div class="row" id="bodyContainer">
-					<div class="carpark-description" id="updateTimeDiv hide">最後更新時間 (每60秒自動更新)：<span id="updateTime"></span></div>
+					<div class="carpark-description" id="updateTimeDiv hide">最後更新時間 (每5分鐘自動更新)：<span id="updateTime"></span></div>
 					<div id="map-canvas" style="width:100%; height:400px;"></div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 		
 		getCurrentLocation();
-		autoRefresh(30000);
+		autoRefresh(300000);
 				
 	});	
 	
