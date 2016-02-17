@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>MACAU CarPark</title>
+    <meta name="description" content="MACAU CarPark  " />
+    <meta name="author" content="MACAU CarPark" />
+    <!-- <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" /> -->
+
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/icomoon.css" />
+    <link rel="stylesheet" href="css/screen.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+    <!-- Page Wrapper -->
+    <div id="">
+        <!-- Header -->
+        <header>
+            <div class="container" style="background-color: #81C7D4; height: 50px;">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3">
+                        <a class="brand" href="index.html">
+                            <img src="img/epark_logo.png" alt="logo-image" />
+                            <!--<h1 style="margin: 10px;">CarPark</h1>-->
+                        </a>
+                    </div>
+                    <div class="col-xs-8 col-sm-9">
+                        <div class="predict-topBar">
+                            <span data-toggle="modal" data-target="#predictModal" style="cursor: pointer;">選取</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <!-- Main Content -->
+        <div class="content-wrapper" style="margin-top: 80px;">
+            <div class="container">
+				<div id="map-canvas" style="width:100%; height:400px;"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="">
+        <div class="container">
+            <div class="copyrights">
+                <p>Copyright 2015. Designed by <a href="#" target="blank">EST</a>
+                    <br />以上資料只供參考</p>
+            </div>
+        </div>
+        </div>
+    </footer>
+
+    <nav>
+        <div id="" class="fixedBar">
+            <ul>
+                <li class="fixedBar-li">
+                    <a href="index.html" class=""><img src="img/home.png">
+                        <div>即時停車場</div>
+                    </a>
+                </li>
+                <li class="fixedBar-li current">
+                    <a href="predict.html" class=""><img src="img/carpark.png" />
+                        <div>預測泊車成功率</div>
+                    </a>
+                </li>
+                <li class="fixedBar-li">
+                    <a href="#" class=""><img src="img/setting.png" />
+                        <div>其他</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    </div>
+</body>
+
+<!-- Scripts -->
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/parse-1.6.7.min.js"></script>
+<script src="js/moment.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+<script>
+	$(document).ready(function() {
+		
+		var geoList = [];
+		var nameList = [];
+	
+		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
+		
+		Parse.GeoPoint.current().then(function(currentGeoLocation){
+		
+			console.log(currentGeoLocation);
+			geoList.push(currentGeoLocation);
+			nameList.push("me");
+			
+			var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
+			var query = new Parse.Query(ClassParkInfo);
+			query.select("Name", "GeoLocation");
+			
+			return query.find();
+		}).then(function(results){
+			
+			$.each(results, function(i, result){
+				geoList.push(result.get("GeoLocation"));
+				nameList.push(result.get("Name"));
+			});		
+			
+			console.log(geoList);
+			buildGoogleMap(geoList, nameList, "map-canvas");
+
+		}, function(error){
+			alert("讀取GPS資料失敗");
+		});
+
+		
+		// buildGoogleMap(22.2076589,113.5499505, "map-canvas");
+		
+	});
+
+	function buildGoogleMap(geoList, nameList, argId){
+		if ($('#' + argId).length) {
+			var map,service;
+			var iconBase = 'http://maps.google.com/mapfiles/kml/shapes/';
+
+			$.each(geoList, function(i, geo){
+				if(i == 0){
+					var latlng = new google.maps.LatLng(geo._latitude, geo._longitude);
+					var myOptions = {
+						zoom: 16,
+						center: latlng,
+						mapTypeId: google.maps.MapTypeId.ROADMAP,
+						scrollwheel: false
+					};
+					map = new google.maps.Map(document.getElementById(argId), myOptions);
+					
+					var marker = new google.maps.Marker({
+						position: latlng,
+						label: nameList[i],
+						title: nameList[i],
+						map: map,
+						icon: iconBase + 'poi.png'
+					});
+					marker.setMap(map);
+				}else{
+					var latlng = new google.maps.LatLng(geo._latitude, geo._longitude);
+					
+					var marker = new google.maps.Marker({
+						position: latlng,
+						label: nameList[i],
+						title: nameList[i],
+						map: map
+					});
+					marker.setMap(map);
+				}
+			})
+			
+
+
+			
+			// latlng = new google.maps.LatLng(22, 111);
+			// marker = new google.maps.Marker({
+				// position: latlng,
+				// map: map
+			// });
+			// marker.setMap(map);
+
+			$('a[href="#baidu-map-tab"]').on('shown.bs.tab', function(e) {
+				google.maps.event.trigger(map, 'resize');
+				map.setCenter(latlng);
+			});
+		}
+	}
+
+	
+</script>
+
+
+</html>
