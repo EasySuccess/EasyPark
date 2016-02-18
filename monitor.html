@@ -47,13 +47,12 @@
             <div class="container">
 				<h1 id="bodyTop">
 					<div>提示：</div>
-					<div>請先按右上方按鍵選取停車場及預計到達時間，</div>
-					<div>結果將會以泊車成功率顯示，</div>
-					<div>泊車成功率僅供參考，建議駕駛人士提早準備。</div>
+					<div>請先按右上方按鍵選取停車場以作監測，當目標停車場車位數量滿足設定值時，會有信息提示。</div>
 				</h1>
 
                 <div class="row hide"  id="bodyContainer">
-                    <div class="carpark-description">搜索條件:<span id="criteria"></span></div>
+                    <div class="carpark-description">監測條件：<span id="monitorThreshold"></span>個車位</div>
+                    <div class="carpark-description">最後更新時間 (每10秒自動更新)：<span id="updateTime"></span></div>
                     <ul class="list-part" id="listPart">
                         <li class="comp">
                             <!-- <a href="#"> -->
@@ -65,22 +64,16 @@
                                     <div class="detial">
                                         <img src="img/car_icon.png" alt="" />
                                         <div class="list-num"></div>
-                                        <div class="list-sub"></div>
-                                        <!-- <div class="list-sub">汽車位剩餘數量</div> -->
+                                        <div class="list-sub">汽車位剩餘數量</div>
                                     </div>
                                     <div class="detial">
                                         <img src="img/motor_icon.png" alt="" />
                                         <div class="list-num"></div>
-                                        <div class="list-sub"></div>
-                                        <!-- <div class="list-sub">電單車位剩餘數量</div> -->
+                                        <div class="list-sub">電單車位剩餘數量</div>
                                     </div>
                                 </div>
                             <!-- </a> -->
                         </li>
-                    </ul>
-					
-					<h4>附近停車場 (由近至遠)</h4>
-					<ul class="list-part" id="listNearBy">
                     </ul>
                 </div>
             </div>
@@ -108,12 +101,12 @@
                         <div>即時停車場</div>
                     </a>
                 </li>
-                <li class="fixedBar-li current">
+                <li class="fixedBar-li">
                     <a href="predict.html" class=""><img src="img/carpark.png" />
                         <div>預測泊車成功率</div>
                     </a>
                 </li>
-				<li class="fixedBar-li">
+				<li class="fixedBar-li current">
                     <a href="monitor.html" class=""><img src="img/carpark.png" />
                         <div>實時監測車位數量</div>
                     </a>
@@ -180,17 +173,13 @@
 								  <option value="麗都">麗都</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="date" class="control-label">日期：</label>
-                            <input type="date" id="inputDate" required></input>
-                        </div>
-                        <div class="form-group">
-                            <label for="time" class="control-label">時間：</label>
-                            <input type="time" id="inputTime" required></input>
-                        </div>
                     </div>
+					<div class="form-group">
+                            <label for="date" class="control-label">車位數量：</label>
+                            <input type="number" id="threshold" required></input>
+                        </div>
                     <div class="modal-footer form-group">
-                        <button type="submit" class="btn theme-btn-2">搜索</button>
+                        <button type="submit" class="btn theme-btn-2">監測</button>
                         <button type="close" class="btn theme-btn-2" data-dismiss="modal">取消</button>
                         <!-- <button type="submit" class="btn theme-btn-2" data-dismiss="modal" data-toggle="modal" data-target="#loginModal">搜索</button> -->
                     </div>
@@ -216,23 +205,18 @@
 	
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 	
-		//Preload in the search form
 		if(getStoredValue("name") != null){
 			
 			var cacheName = getStoredValue("name");
-			var cacheDate = getStoredValue("date");
-			
-			var date = moment(new Date(cacheDate));
-			$("#inputDate").val(date.format('YYYY-MM-DD'));
-			$("#inputTime").val(date.format("HH:MM"));
+			var cacheThreshold = getStoredValue("threshold");
 			
 			$('select option[value="' + cacheName + '"]').attr("selected",true);
-		}else{
-			var today = moment();
-			$("#inputDate").val(today.format('YYYY-MM-DD'));
-			$("#inputTime").val(today.format("HH:MM"));
+			$("#threshold").val(cacheThreshold);
+			
 		}
 	
+		var name = getStoredValue("name");	
+		var threshold = getStoredValue("threshold");	
 		var result = JSON.parse(getStoredValue("result"));
 		
 		//Display result only after searchForm store value in localStorage
@@ -242,97 +226,53 @@
 					
 			if(!result.success){
 			
-				alert("讀取資料失敗。");
+				alert("未能取得停車場資料，請檢查網路連接。");
+				console.log("error");
 				
-			}else{					
+			}else{
 								
 				var template = $("#listPart").html();
 				$("#listPart").empty();
-				$("#listNearBy").empty();
 					
 				var data = result.data;
 									
-				$("#listPart").append(template);
-				$("#listPart li:eq(0) h4").html(data.name);
-				$("#listPart li:eq(0) .list-img").attr("src", "img/" + data.name + ".jpg");
-				// $("#listPart li:eq(0) .detial:eq(0) div:eq(0)").html(data.carSuccessRate + "% (平均" + data.numCarPark + "個)");
-				// $("#listPart li:eq(0) .detial:eq(1) div:eq(0)").html(data.motorSuccessRate + "% (平均" + data.numMotorPark + "個)");
-				
-				$("#listPart li:eq(0) .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "%");
-				$("#listPart li:eq(0) .detial:eq(0) div:eq(1)").html("平均" + data.numWeightedCarPark + "個");
-				$("#listPart li:eq(0) .detial:eq(0) div:eq(0)").css('color', getColorStyle(data.carWeightedSuccessRate));
-				
-				$("#listPart li:eq(0) .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "%");
-				$("#listPart li:eq(0) .detial:eq(1) div:eq(1)").html("平均" + data.numWeightedMotorPark + "個");
-				$("#listPart li:eq(0) .detial:eq(1) div:eq(0)").css('color', getColorStyle(data.motorWeightedSuccessRate));
-				
-			
-				var criteria = result.criteria;
-				var momentDate = moment(criteria.dateTime);
-				
-				$("#criteria").empty();
-				$("#criteria").append(criteria.name + ", " + momentDate.format("YYYY-MM-DD hh:mm A"));				
-				
-				
-				var date = momentDate.toDate();
-				var dayOfWeek = criteria.dayOfWeek
-				var nearbyPark = data.nearby_park;
-				var promise = Parse.Promise.as();
-
-				$.each(nearbyPark, function(i, nearParkName){
+				$.each(data, function(i, park){
 					
-					promise = promise.then(function(){
-						
-						return Parse.Cloud.run("getPredictParkingData", 
-							{
-								dateTime: date, 
-								location: nearParkName,
-								dayOfWeek: dayOfWeek,
-								skipNearby: true
-							});
+					if(park.name == name){
+										
+						$("#listPart").append(template);
+									
+						$("#listPart li:eq(" + 0 + ") h4").html(park.name + "(" + getParkFee(park.name) + ")");
+						$("#listPart li:eq(" + 0 + ") .list-img").attr("src", "img/" + park.name + ".jpg");
+						$("#listPart li:eq(" + 0 + ") .detial:eq(0) div:eq(0)").html(park.numCarPark);
+						$("#listPart li:eq(" + 0 + ") .detial:eq(1) div:eq(0)").html(park.numMotorPark);
 							
-					}).then(function(result){
-						
-						console.log(result);
-						
-						if(result.success){
-
-								var data = result.data;
-													
-								$("#listNearBy").append(template);								
-								$("#listNearBy li:eq(" + i + ") h4").html(data.name);
-								$("#listNearBy li:eq(" + i + ") .list-img").attr("src", "img/" + data.name + ".jpg");
-								
-								//$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "% (平均" + data.numWeightedCarPark + "個)");
-								//$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "% (平均" + data.numWeightedMotorPark + "個)");
-								
-								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").html(data.carWeightedSuccessRate + "%");
-								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(1)").html("平均" + data.numWeightedCarPark + "個");
-								$("#listNearBy li:eq(" + i + ") .detial:eq(0) div:eq(0)").css('color', getColorStyle(data.carWeightedSuccessRate));
-								
-								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").html(data.motorWeightedSuccessRate + "%");
-								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(1)").html("平均" + data.numWeightedMotorPark + "個");
-								$("#listNearBy li:eq(" + i + ") .detial:eq(1) div:eq(0)").css('color', getColorStyle(data.motorWeightedSuccessRate));
-							
-						}else{
-						
-								$("#listNearBy").append(template);
-								$("#listNearBy li:eq(" + i + ")").hide();
-								
+						if(park.numCarPark >= threshold){
+							alert("有車位！" + park.name + "目前車位數量有" + park.numCarPark);
 						}
 						
-					}, function(error){
-						console.log(error);
-					});
-				})
-				
+						return false;
+					}
+				});
+						
 			}
+			
+			
+			$("#monitorThreshold").empty();
+			$("#monitorThreshold").html(threshold);
+			
+			var momentDate = moment();
+			$("#updateTime").empty();
+			//$("#updateTime").append(momentDate.format("YYYY-MM-DD hh:mm:ss A"));
+			$("#updateTime").append(momentDate.format("hh:mm:ss A"));
 			
 			$("#bodyContainer").removeClass("hide");
 			$("#bodyTop").addClass("hide");
+			$(".blackout").hide();
 			
 			//Remove result from localStorage
 			removeStoredValue("result");
+			
 		}
 
 		$("#searchForm").submit(function(e) {
@@ -341,35 +281,58 @@
 						
 				$(".blackout").show();
 				var name = $("#parkName").val();
-				var momentDate = moment($("#inputDate").val() + " " + $("#inputTime").val(), "YYYY-MM-DD HH:mm");
-				var date = momentDate.toDate();
-				var dayOfWeek = getDayOfWeek(date);
-				
+				var threshold = $("#threshold").val();
 				storeValue("name", name);
-				storeValue("date", date);
+				storeValue("threshold", threshold);
 								
-				Parse.Cloud.run("getPredictParkingData", 
-					{
-						dateTime: date, 
-						location: name,
-						dayOfWeek: dayOfWeek,
-						skipNearby: false
-					}).then(function(result){
-					
-					storeValue("result", JSON.stringify(result));					
-
-					window.location.reload();
-					
-				}, function(error){
-					console.log(error);
-				});
+				getParkingData();
 				
 				e.preventDefault();
 			}
 			
 		});
 		
+		autoRefresh(10000);
+		
 	});
+	
+	function getParkingData(){
+	
+		Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
+					
+			console.log(result);
+						
+			if(!result.success){
+			
+				alert("未能取得停車場資料，請檢查網路連接。");
+				console.log("error");
+				
+			}else{
+			
+				storeValue("result", JSON.stringify(result));					
+
+				window.location.reload();
+			
+			}
+				
+		
+		},function(error){
+		
+			console.log(error);
+			
+		});
+		
+	}
+	
+	function autoRefresh(interval){
+	
+		var Interval = setInterval(function() {
+			
+			getParkingData();
+			
+		}, interval);
+		
+	}
 	
 
 	

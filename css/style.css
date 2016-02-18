@@ -4,7 +4,7 @@
 .predict-topBar{text-align: right; color: #4b4b4b;margin-top: 15px;}
 .fixedBar{width: 100%; background-color: #ebebeb; position: fixed; bottom: 0; height: 60px;box-shadow: -1px -1px 1px #cfcfcf;}
 .fixedBar > ul{list-style: none;	height: 100%;}
-li.fixedBar-li{float: left;width: 33.3%; text-align: center;}
+li.fixedBar-li{float: left;width: 25%; text-align: center;}
 li.fixedBar-li a{color: #3c3c3c;}
 li.fixedBar-li img{width: 35px;}
 li.fixedBar-li span{margin: 0 10%;	width: 100%;}

@@ -104,6 +104,11 @@
                         <div>預測泊車成功率</div>
                     </a>
                 </li>
+				<li class="fixedBar-li">
+                    <a href="monitor.html" class=""><img src="img/carpark.png" />
+                        <div>實時監測車位數量</div>
+                    </a>
+                </li>
                 <li class="fixedBar-li">
                     <a href="map.html" class=""><img src="img/app.png" />
                         <div>地圖展示</div>
@@ -246,22 +251,6 @@
 			buildBodyContainer(template, distList);
 			
 		}, interval);
-		
-	}
-	
-	function getParkFee(name){
-				
-		feeOf2 = ["栢麗", "下環街市"];
-		feeOf3 = ["栢港","栢景","栢威","栢蕙","污水處理站","華士古達嘉馬花園 ","祐漢公園","科學館","麗都","交通事務局大樓","青翠樓","望善樓","河邊新街","快富樓","蓮花路","永寧街","氹仔中央公園","氹仔客運碼頭","望賢樓","湖畔大廈","居雅大廈","業興大廈","樂群樓","青葱大廈"]
-		feeOf6 = ["栢佳","栢濤","栢寧","栢力","栢樂","南灣(栢湖)","宋玉生廣場","藝園","亞馬喇前地","何賢公園","馬六甲街","黑橋街","快達樓"]
-		
-		if(feeOf2.indexOf(name) >= 0){
-			return "$2";
-		}else if(feeOf6.indexOf(name) >= 0){
-			return "$6";
-		}else{
-			return "$3";
-		}
 		
 	}
 	
