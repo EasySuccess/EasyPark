@@ -128,8 +128,9 @@
 				resolve(currentGeoLocation);
 			}, function(error){
 			
-				alert("讀取GPS資料失敗，請開啟GPS。");
+				alert("讀取GPS資料失敗，請開啟GPS。開啟GPS後請更新網頁。");
 				//getParkInfo();
+				$(".blackout").hide();
 				reject();
 				
 			});
