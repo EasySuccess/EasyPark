@@ -198,6 +198,7 @@
 <script src="js/moment.js"></script>
 <script src="js/getUrlVars.js"></script>
 <script src="js/custom.js"></script>
+<script src="js/jquery.playSound.js"></script>
 
 
 <script>
@@ -246,9 +247,13 @@
 						$("#listPart li:eq(" + 0 + ") .list-img").attr("src", "img/" + park.name + ".jpg");
 						$("#listPart li:eq(" + 0 + ") .detial:eq(0) div:eq(0)").html(park.numCarPark);
 						$("#listPart li:eq(" + 0 + ") .detial:eq(1) div:eq(0)").html(park.numMotorPark);
-							
+						
 						if(park.numCarPark >= threshold){
-							alert("有車位！" + park.name + "目前車位數量有" + park.numCarPark);
+							// $.playSound("media/Whisper");
+							var audio = new Audio('media/Whisper.mp3');
+							audio.play();
+								
+							setTimeout(function(){alert("有車位！" + park.name + "目前車位數量有" + park.numCarPark);;},1000);
 						}
 						
 						return false;
