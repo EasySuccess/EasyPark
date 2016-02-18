@@ -44,8 +44,9 @@
 			
             <div class="container">
 				<h1 id="bodyTop">資料載入中，請耐心等候...</h1>
+				<h3 class="hide" id="bodyTop2"><img src="img/poi.png" width="32" height="32" alt="logo-image" />你的位置</h3>
                 <div class="row" id="bodyContainer">
-					<div class="carpark-description" id="updateTimeDiv hide">最後更新時間 (每5分鐘自動更新)：<span id="updateTime"></span></div>
+					<div class="carpark-description hide" id="updateTimeDiv">最後更新時間 (每5分鐘自動更新)：<span id="updateTime"></span></div>
 					<div id="map-canvas" style="width:100%; height:400px;"></div>
                 </div>
             </div>
@@ -96,6 +97,7 @@
 <script src="js/parse-1.6.7.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/getUrlVars.js"></script>
+<script src="js/custom.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 
 <script>
@@ -106,25 +108,28 @@
 		
 		Parse.initialize("SYNJggCNxjtYuooVAiFh1cVtcT13uRISc1jtDZHN", "gkWIgX1vSMivt7B2lFqJQbEzoUZd4d73IydpX5hR");
 		
-		getCurrentLocation();
-		autoRefresh(300000);
+		buildMap();
+		// autoRefresh(300000);
 				
 	});	
 	
-	function getCurrentLocation(){
+	function buildMap(){
 		
 		return new Promise(function(resolve, reject){
 		
 			Parse.GeoPoint.current().then(function(currentGeoLocation){
-		
+			
+				$("#bodyTop").append("<br>");
+				$("#bodyTop").append("成功讀取GPS資料...");
+			
 				console.log(currentGeoLocation);		
-				buildMap(currentGeoLocation);
+				getParkInfo(currentGeoLocation);
 				
 				resolve(currentGeoLocation);
 			}, function(error){
 			
-				alert("讀取GPS資料失敗");
-				buildMap();
+				alert("讀取GPS資料失敗，請開啟GPS。");
+				//getParkInfo();
 				reject();
 				
 			});
@@ -132,7 +137,7 @@
 		});
 	}
 	
-	function buildMap(currentGeoLocation){
+	function getParkInfo(currentGeoLocation){
 	
 		Parse.Cloud.run("getInstantParkingData", {}).then(function(result){
 					
@@ -140,12 +145,21 @@
 						
 			if(!result.success){
 			
-				alert("讀取資料失敗");
+				alert("未能取得停車場資料，請檢查網路連接。");
 				
 			}else{
 			
+				$("#bodyTop").append("<br>");
+				$("#bodyTop").append("成功取得停車場資料...");
+			
 				var data = result.data;	
 				console.log(data);
+				$.each(data, function(j, park){
+					
+					console.log(park.name);
+					
+				});
+				
 			
 				var geoList = [];
 				var nameList = [];
@@ -160,15 +174,16 @@
 					$.each(results, function(i, result){
 						geoList.push(result.get("GeoLocation"));
 						nameList.push(result.get("Name"));
+						// console.log(geoList.length);
 					});	
 				
 					console.log(geoList);
 					console.log(nameList);
 					
 					$.each(nameList, function(i, name){
-						
-						$.each(data, function(i, park){
-							
+					
+						$.each(data, function(j, park){
+														
 							if(name == park.name){
 								vacancyList.push(park.numCarPark);
 								return false;
@@ -178,14 +193,18 @@
 						
 					});
 					
+					console.log(vacancyList.length);
+					console.log(vacancyList);
+					
 					var momentDate = moment();
 					
 					$("#updateTime").empty();
 					//$("#updateTime").append(momentDate.format("YYYY-MM-DD hh:mm:ss A"));
 					$("#updateTime").append(momentDate.format("hh:mm:ss A"));
 					
-					$("#updateTimeDiv").removeClass("hide");
+					// $("#updateTimeDiv").removeClass("hide");
 					$("#bodyTop").addClass("hide");
+					$("#bodyTop2").removeClass("hide");
 					$(".blackout").hide();
 					
 					buildGoogleMap(geoList, nameList, vacancyList, currentGeoLocation, "map-canvas");
@@ -194,7 +213,7 @@
 		
 		},function(error){
 		
-			alert("讀取資料失敗");
+			alert("未能取得停車場資料，請檢查網路連接。");
 			
 		});
 		
@@ -204,7 +223,7 @@
 	
 		var Interval = setInterval(function() {
 			
-			getCurrentLocation();
+			buildMap();
 			
 		}, interval);
 		

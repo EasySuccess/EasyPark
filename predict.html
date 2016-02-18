@@ -156,17 +156,18 @@
 								  <option value="青葱大廈">青葱大廈</option>
 								  <option value="科學館">科學館</option>
 								  <option value="栢佳">栢佳</option>
+								  <option value="栢港">栢港</option>
 								  <option value="栢寧">栢寧</option>
 								  <option value="栢樂">栢樂</option>
-								  <option value="栢蕙">栢蕙</option>
 								  <option value="栢濤">栢濤</option>
+								  <option value="栢蕙">栢蕙</option>
 								  <option value="栢麗">栢麗</option>
+								  <option value="栢威">栢威</option>
 								  <option value="祐漢公園">祐漢公園</option>
 								  <option value="望善樓">望善樓</option>
 								  <option value="黑橋街">黑橋街</option>
 								  <option value="望賢樓">望賢樓</option>
 								  <option value="湖畔大廈">湖畔大廈</option>
-								  <option value="華士古達嘉馬花園">華士古達嘉馬花園</option>
 								  <option value="業興大廈">業興大廈</option>
 								  <option value="蓮花路">蓮花路</option>
 								  <option value="藝園">藝園</option>
@@ -201,6 +202,9 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/parse-1.6.7.min.js"></script>
 <script src="js/moment.js"></script>
+<script src="js/getUrlVars.js"></script>
+<script src="js/custom.js"></script>
+
 
 <script>
 	$(document).ready(function() {
@@ -362,66 +366,6 @@
 		
 	});
 	
-		
-	function getDayOfWeek(argDate){
-		
-		var weekday = new Array(7);
-		weekday[0]=  "sunday";
-		weekday[1] = "monday";
-		weekday[2] = "tuesday";
-		weekday[3] = "wednesday";
-		weekday[4] = "thursday";
-		weekday[5] = "friday";
-		weekday[6] = "saturday";
-		
-		return weekday[argDate.getDay()];
-	}
-	
-	function formatFloat(num, pos){
-	  var size = Math.pow(10, pos);
-	  return Math.round(num * size) / size;
-	}
-	
-	//Cookie Function
-	function storeValue(key, value) {
-		if (localStorage) {
-			localStorage.setItem(key, value);
-		} else {
-			$.cookies.set(key, value);
-		}
-	}
-
-	function getStoredValue(key) {
-		if (localStorage) {
-			return localStorage.getItem(key);
-		} else {
-			return $.cookies.get(key);
-		}
-	}
-	
-	function removeStoredValue(key){
-		if(localStorage){
-			localStorage.removeItem(key);
-		} else {
-			$.removeCookie(key);
-		}
-	}
-	
-	function getColorStyle(num){
-		
-		if(num <= 0){
-			return "Red";
-		}else if( num > 0 & num <= 30){
-			return "Orange";
-		}else if( num > 30 & num <= 60){	
-			return "Khaki";
-		}else if( num > 60 & num <= 90){
-			return "Blue";
-		}else if( num > 90){
-			return "GreenYellow ";
-		}else{
-		}
-	}
 
 	
 </script>

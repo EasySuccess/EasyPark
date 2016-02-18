@@ -122,6 +122,7 @@
 <script src="js/parse-1.6.7.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/getUrlVars.js"></script>
+<script src="js/custom.js"></script>
 
 <script>
 
@@ -137,7 +138,12 @@
 		//Get User current location and get the list from nearest
 		
 		if(gpsEnable){
+		
 			Parse.GeoPoint.current().then(function(currentGeoLocation){
+			
+				$("#bodyTop").append("<br>");
+				$("#bodyTop").append("成功讀取GPS資料...");
+				
 				console.log(currentGeoLocation);
 				// ParseGeoPoint currentGeoLocation = new ParseGeoPoint(position.coords.latitude, position.coords.longitude);
 				var ClassParkInfo = Parse.Object.extend("Dev_Park_Info");
@@ -158,14 +164,19 @@
 				autoRefresh(template, 10000, distList);
 				
 			}, function(error){
-				alert("讀取GPS資料失敗");
+			
+				alert("讀取GPS資料失敗，請開啟GPS。停車場資料將以正常排序顯示。");
+				
 				buildBodyContainer(template);
 				autoRefresh(template, 10000)
+				
 			});
 			
 		}else{
+		
 			buildBodyContainer(template);
 			autoRefresh(template, 10000)
+			
 		}
 		
 	});
@@ -178,9 +189,12 @@
 						
 			if(!result.success){
 			
-				alert("讀取資料失敗");
+				alert("未能取得停車場資料，請檢查網路連接。");
 				
 			}else{
+			
+				$("#bodyTop").append("<br>");
+				$("#bodyTop").append("成功取得停車場資料...");
 			
 				$("#listPart").empty();
 									
